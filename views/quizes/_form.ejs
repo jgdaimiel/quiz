@@ -2,5 +2,13 @@
 <input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>"/>
 <label for="resp" class="rem">Respuesta:</label>
 <input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>"/>
+<label for="cat" class="rem">Categoría:</label>
+<select form="preguntas" name="quiz[categoria]">
+  <option value="Otro" <%= selec.otro %>>Otro</option>
+  <option value="Humanidades" <%= selec.humanidades %>>Humanidades</option>
+  <option value="Ocio" <%= selec.ocio %>>Ocio</option>
+  <option value="Ciencia" <%= selec.ciencia %>>Ciencia</option>
+  <option value="Tecnologia" <%= selec.tecnologia %>>Tecnología</option>
+</select>
 <a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Salvar"/>
