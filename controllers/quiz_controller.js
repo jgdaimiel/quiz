@@ -39,18 +39,18 @@ exports.answer = function(req, res){
 //GET /quizes/new
 exports.new = function(req, res){
 	var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"}); //crea objeto quiz
-	var selec = scripts.cat_select(null);
 
-	res.render('quizes/new', {quiz: quiz, errors: [], selec: selec}); //enviamos el objeto 'selec' vacío ya que se utilizará en el formulario de creación
+	res.render('quizes/new', {quiz: quiz, errors: [], selec: {}}); //enviamos el objeto 'selec' vacío ya que se utilizará en el formulario de creación
 };
 
 //POST /quizes/create
 exports.create = function(req, res){
 	var quiz = models.Quiz.build(req.body.quiz);
+	var selec = scripts.cat_select(quiz.categoria);
 
 	quiz.validate().then(function(err){
 		if(err) {
-			res.render('quizes/new', {quiz: quiz, errors: err.errors, selec: {}});
+			res.render('quizes/new', {quiz: quiz, errors: err.errors, selec: selec});
 		}
 		else {
 			//guarda en BD los campos pregunta, respuesta y categoría de quiz
