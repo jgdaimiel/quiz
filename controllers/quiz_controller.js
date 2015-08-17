@@ -15,11 +15,19 @@ exports.load = function(req, res, next, quizId) {
 };
 
 
-//GET /quizes
+//GET /quizes?search=texto_a_buscar
 exports.index = function(req, res){
-	models.Quiz.findAll().then(function(quizes){
+	var search = '%';
+
+	if(req.query.search)
+		search = search + req.query.search.replace(/\s+/g, "%") + '%';
+
+	models.Quiz.findAll({
+		 where: ["pregunta like ?", search],
+		 order: 'pregunta ASC'
+		}).then(function(quizes){
 		res.render('quizes/index', {quizes: quizes, errors: []});
-	});
+	}).catch(function(error){ next(error); });
 };
 
 //GET /quizes/:quizId
