@@ -3,7 +3,10 @@ var scripts = require('../public/javascripts/scripts.js'); //importamos fichero 
 
 //Autoload - factoriza el código si la ruta incluye :id
 exports.load = function(req, res, next, quizId) {
-	models.Quiz.findById(quizId).then(function(quiz) {
+	models.Quiz.find({
+		where: { id: Number(quizId) },
+		include: [{ model: models.Comment }]
+	}).then(function(quiz) {
 		if(quiz){
 			req.quiz = quiz;
 			next();
@@ -23,7 +26,7 @@ exports.index = function(req, res){
 		search = search + req.query.search.replace(/\s+/g, "%") + '%';
 
 	models.Quiz.findAll({
-		 where: ["pregunta like ?", search],
+		 where: ["upper(pregunta) like upper(?)", search],
 		 order: 'pregunta ASC'
 		}).then(function(quizes){
 		res.render('quizes/index', {quizes: quizes, errors: []});
