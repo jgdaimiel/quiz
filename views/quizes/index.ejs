@@ -8,12 +8,14 @@
   <% var i; for (i=0; i<quizes.length; i++){ %>
      <tr>
        <td><p><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a> (<%= quizes[i].categoria %>)</p></td>
+       <% if(session.user) {%>
        <td><a href="quizes/<%= quizes[i].id %>/edit"><button type="button">editar</button></a></td>
        <td>
          <form action="quizes/<%= quizes[i].id %>?_method=delete" method="post">
            <button type="submit" onclick="return confirm('Borrar: <%= quizes[i].pregunta %>')">borrar</button>
          </form>
        </td>
+       <% } %>
      </tr>
   <% } %>
 </table>
