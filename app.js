@@ -39,6 +39,17 @@ app.use(function(req, res, next){
   next();
 });
 
+// Temporizador de sesion
+app.use(function(req, res, next){
+  var now = new Date().getTime();
+  if (req.session.lastInteraction && now-req.session.lastInteraction > 2*60*1000) {
+    delete req.session.user;
+    delete req.session.lastInteraction;
+    }
+    req.session.lastInteraction = now;
+    next();
+});
+
 
 app.use('/', routes);
 
