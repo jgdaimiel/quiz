@@ -1,2 +1,2 @@
 # quiz
-Web de preguntas y respuestas para el curso MiriadaX de node.js
+Web de preguntas y respuestas utilizando node.js y express.js.
